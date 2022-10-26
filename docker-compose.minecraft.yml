@@ -3,7 +3,7 @@ version: "3.6"
 services:
   server:
     image: "itzg/minecraft-server:latest"
-    container_name: "mc_foo"
+    container_name: "minecraft_foo"
     restart: "unless-stopped"
     ports:
       - "25565:25565"
@@ -53,7 +53,7 @@ services:
 
   backups:
     image: "itzg/mc-backup"
-    container_name: "mc_foo_backups"
+    container_name: "minecraft_foo_backups"
     restart: "unless-stopped"
     volumes:
       - "./data:/data:ro"
