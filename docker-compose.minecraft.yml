@@ -1,0 +1,71 @@
+version: "3.6"
+
+services:
+  server:
+    image: "itzg/minecraft-server:latest"
+    container_name: "mc_foo"
+    restart: "unless-stopped"
+    ports:
+      - "25565:25565"
+    volumes:
+      - "./data:/data"
+    environment:
+      # Required
+      # ---
+      EULA: "true"
+
+      # Settings
+      # ---
+      VERSION: "1.19.2"
+      MOTD: "Grayson's Minecraft server."
+      DIFFICULTY: "easy"
+      TZ: "America/New_York"
+      # ICON: ""
+
+      # World
+      # ---
+      # SEED: "foobar"
+      # SPAWN_PROTECTION: "0" 
+
+      # Access
+      # ---
+      ENABLE_WHITELIST: "true"
+      WHITELIST: "pizzaThis,spaghettiThat"
+      # MAX_PLAYERS: "20"
+
+      # Administration
+      # ---
+      OPS: "pizzaThis"
+
+      # Performance
+      # ---
+      MEMORY: "3G"
+      # VIEW_DISTANCE: "10"
+
+      # Autopause
+      # ---
+      ENABLE_AUTOPAUSE: "true"
+      MAX_TICK_TIME: "-1"
+      # AUTOPAUSE_TIMEOUT_EST: "3600"
+      # AUTOPAUSE_TIMEOUT_INIT: "600"
+      # AUTOPAUSE_TIMEOUT_KN: "120"
+      # AUTOPAUSE_PERIOD: "10"
+
+  backups:
+    image: "itzg/mc-backup"
+    container_name: "mc_foo_backups"
+    restart: "unless-stopped"
+    volumes:
+      - "./data:/data:ro"
+      - "./backups:/backups"
+    environment:
+      PAUSE_IF_NO_PLAYERS: "true"
+      TZ: "America/New_York"
+      RCON_HOST: "server"
+
+      # Other 
+      # ---
+      # BACKUP_INTERVAL: "24h"
+      # BACKUP_NAME: "world"
+      # PRUNE_BACKUPS_DAYS: "7"
+      # SERVER_PORT: "25565"
